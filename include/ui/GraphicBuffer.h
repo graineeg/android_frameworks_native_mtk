@@ -72,12 +72,6 @@ public:
 
     GraphicBuffer();
 
-    /*
-    // [+] Decker
-    GraphicBuffer(uint32_t inWidth, uint32_t inHeight, PixelFormat inFormat,
-            uint32_t inUsage); 
-    */
-
     // creates w * h buffer
     GraphicBuffer(uint32_t inWidth, uint32_t inHeight, PixelFormat inFormat,
             uint32_t inUsage, std::string requestorName = "<Unknown>");
