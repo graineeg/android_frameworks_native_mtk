@@ -73,9 +73,15 @@ public:
     GraphicBuffer();
 
     // creates w * h buffer
+#if MTK_HARDWARE
+    GraphicBuffer(uint32_t inWidth, uint32_t inHeight, PixelFormat inFormat,
+            uint32_t inUsage);
+    GraphicBuffer(uint32_t inWidth, uint32_t inHeight, PixelFormat inFormat,
+            uint32_t inUsage, std::string requestorName);
+#else
     GraphicBuffer(uint32_t inWidth, uint32_t inHeight, PixelFormat inFormat,
             uint32_t inUsage, std::string requestorName = "<Unknown>");
-
+#endif
     // create a buffer from an existing handle
     GraphicBuffer(uint32_t inWidth, uint32_t inHeight, PixelFormat inFormat,
             uint32_t inUsage, uint32_t inStride, native_handle_t* inHandle,
