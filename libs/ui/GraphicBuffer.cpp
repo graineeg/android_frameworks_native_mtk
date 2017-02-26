@@ -30,6 +30,36 @@
 
 namespace android {
 
+// [+] Decker, объявляем свой класс
+class GraphicBufferStubDecker {
+ public:
+  ~GraphicBufferStubDecker();
+  GraphicBufferStubDecker(uint32_t inWidth, uint32_t inHeight,
+        PixelFormat inFormat, uint32_t inUsage);
+  sp<android::GraphicBuffer> mBuffer;
+};
+
+GraphicBufferStubDecker::GraphicBufferStubDecker(uint32_t inWidth, uint32_t inHeight,
+        PixelFormat inFormat, uint32_t inUsage)
+  : mBuffer(new android::GraphicBuffer(inWidth, inHeight, inFormat, inUsage)) {
+} // constructors take base initializers
+
+GraphicBufferStubDecker::~GraphicBufferStubDecker() {} // деструктор
+
+// экспорт
+extern "C" {
+
+void _ZN7android13GraphicBufferC1Ejjij(uint32_t inWidth, uint32_t inHeight,
+        PixelFormat inFormat, uint32_t inUsage); // прототип
+
+void _ZN7android13GraphicBufferC1Ejjij(uint32_t inWidth, uint32_t inHeight,
+        PixelFormat inFormat, uint32_t inUsage) {
+	GraphicBufferStubDecker::GraphicBufferStubDecker(inWidth, inHeight, inFormat, inUsage);
+}
+}
+
+
+
 // ===========================================================================
 // Buffer and implementation of ANativeWindowBuffer
 // ===========================================================================
@@ -52,6 +82,25 @@ GraphicBuffer::GraphicBuffer()
     usage  = 0;
     handle = NULL;
 }
+
+/*
+// [+] Decker
+GraphicBuffer::GraphicBuffer()
+    : BASE(), mOwner(ownData), mBufferMapper(GraphicBufferMapper::get()),
+      mInitCheck(NO_ERROR), mId(getUniqueId()), mGenerationNumber(0)
+{
+    width  =
+    height =
+    stride =
+    format =
+    usage  = 0;
+    handle = NULL;
+    std::string requestorName("<Unknown>");
+    mInitCheck = initSize(inWidth, inHeight, inFormat, inUsage
+            std::move(requestorName));
+}
+// ---
+*/
 
 GraphicBuffer::GraphicBuffer(uint32_t inWidth, uint32_t inHeight,
         PixelFormat inFormat, uint32_t inUsage, std::string requestorName)
